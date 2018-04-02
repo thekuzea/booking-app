@@ -1,0 +1,19 @@
+<form [formGroup]="addPlaneForm" class="login-form">
+  <mat-card>
+    <div class="row">
+      <mat-form-field class="full-width margin-up-bottom-8">
+        <input matInput placeholder="Title" formControlName="title" [errorStateMatcher]="matcher" />
+
+        <mat-error *ngIf="addPlaneForm.controls['title'].errors">Field is <strong>required</strong></mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row">
+      <div class="col-sm-11 object-buffer">
+        <button type="button" class="btn btn-primary btn-block" (click)="submit()">Submit</button>
+      </div>
+    </div>
+  </mat-card>
+</form>

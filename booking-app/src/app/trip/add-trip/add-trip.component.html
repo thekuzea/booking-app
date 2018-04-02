@@ -1,0 +1,57 @@
+<form [formGroup]="addTripForm" class="trip-form">
+  <mat-card>
+    <div class="row">
+      <div class="col-sm-5 object-buffer">
+        <mat-select placeholder="From" formControlName="placeOfDeparture" class="from-to-select">
+          <mat-option *ngFor="let airport of airportList" [value]="airport.code">{{ airport.description }}</mat-option>
+        </mat-select>
+      </div>
+
+      <div class="col-sm-5 object-buffer">
+        <mat-select placeholder="To" formControlName="placeOfArrival" class="from-to-select">
+          <mat-option *ngFor="let airport of airportList" [value]="airport.code">{{ airport.description }}</mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row">
+      <mat-form-field class="col-sm-5 object-buffer">
+        <input matInput [matDatepicker]="departure" placeholder="Departure date" formControlName="departureDate">
+        <mat-datepicker-toggle matSuffix [for]="departure"></mat-datepicker-toggle>
+        <mat-datepicker #departure></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row">
+      <div class="col-sm-6 object-buffer">
+        <mat-select placeholder="Class" formControlName="tripClass">
+          <mat-option value="ECONOMY">Economy</mat-option>
+          <mat-option value="BUSINESS">Business</mat-option>
+          <mat-option value="FIRSTCLASS">First class</mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row">
+      <div class="col-sm-6 object-buffer">
+        <mat-select placeholder="Plane" formControlName="plane">
+          <mat-option *ngFor="let planeIt of planeList" [value]="planeIt">{{ planeIt.name }}</mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row">
+      <div class="col-sm-11 object-buffer">
+        <button type="button" class="btn btn-primary btn-block" (click)="submit()">Submit</button>
+      </div>
+    </div>
+  </mat-card>
+</form>

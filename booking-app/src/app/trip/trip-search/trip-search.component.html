@@ -1,0 +1,85 @@
+<form [formGroup]="searchForm" class="trip-form">
+  <mat-card>
+    <div class="row">
+      <div class="col-sm-5 object-buffer">
+        <mat-select placeholder="From" formControlName="placeOfDeparture" class="from-to-select">
+          <mat-option *ngFor="let airport of airportList" [value]="airport.code">{{ airport.description }}</mat-option>
+        </mat-select>
+      </div>
+
+      <div class="col-sm-5 object-buffer">
+        <mat-select placeholder="To" formControlName="placeOfArrival" class="from-to-select">
+          <mat-option *ngFor="let airport of airportList" [value]="airport.code">{{ airport.description }}</mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row">
+      <mat-radio-group formControlName="isOneway" class="col-sm-4 object-buffer">
+        <mat-radio-button [value]="false" (change)="searchForm.controls['returningDate'].enable()">Return</mat-radio-button>
+        <mat-radio-button [value]="true" (change)="searchForm.controls['returningDate'].disable()">One-way</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row">
+      <mat-form-field class="col-sm-5 object-buffer">
+        <input matInput [matDatepicker]="departure" placeholder="Departure date" formControlName="departureDate">
+        <mat-datepicker-toggle matSuffix [for]="departure"></mat-datepicker-toggle>
+        <mat-datepicker #departure></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="col-sm-5 object-buffer">
+        <input matInput [matDatepicker]="return" placeholder="Return date" formControlName="returningDate">
+        <mat-datepicker-toggle matSuffix [for]="return"></mat-datepicker-toggle>
+        <mat-datepicker #return></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row">
+      <div class="col-sm-6 object-buffer">
+        <mat-select placeholder="Class" formControlName="tripClass">
+          <mat-option value="ECONOMY">Economy</mat-option>
+          <mat-option value="BUSINESS">Business</mat-option>
+          <mat-option value="FIRSTCLASS">First class</mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row">
+      <div class="col-sm-3 object-buffer">
+        <mat-select placeholder="Adult" class="from-to-select">
+          <mat-option *ngFor="let it of range(1,11)" [value]="it">{{ it }}</mat-option>
+        </mat-select>
+      </div>
+
+      <div class="col-sm-3 object-buffer">
+        <mat-select placeholder="Child" class="from-to-select">
+          <mat-option *ngFor="let it of range(1,6)" [value]="it">{{ it }}</mat-option>
+        </mat-select>
+      </div>
+
+      <div class="col-sm-3 object-buffer">
+        <mat-select placeholder="Infant" class="from-to-select">
+          <mat-option value="0">0</mat-option>
+          <mat-option value="1">1</mat-option>
+        </mat-select>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row">
+      <div class="col-sm-11 object-buffer">
+        <button type="button" class="btn btn-primary btn-block" (click)="submit()">Search</button>
+      </div>
+    </div>
+  </mat-card>
+</form>

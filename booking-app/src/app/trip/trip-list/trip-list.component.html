@@ -1,0 +1,44 @@
+<mat-card class="trip-list-form">
+  <table width="100%">
+    <tr>
+      <td>Place of departure</td>
+      <td>Place of arrival</td>
+      <td>Date of departure</td>
+      <td>Class</td>
+    </tr>
+    <ng-container *ngIf="sharedTrip == undefined">
+      <tr *ngFor="let trip of tripList">
+        <td>{{ trip.placeOfDeparture }}</td>
+        <td>{{ trip.placeOfArrival }}</td>
+        <td>{{ trip.departureDate }}</td>
+        <td>{{ trip.tripClass }}</td>
+      </tr>
+    </ng-container>
+    <ng-container *ngIf="sharedTrip != undefined">
+      <ng-container *ngIf="sharedTrip.isOneway">
+        <tr *ngFor="let trip of tripList">
+          <td>{{ trip.placeOfDeparture }}</td>
+          <td>{{ trip.placeOfArrival }}</td>
+          <td>{{ trip.departureDate }}</td>
+          <td>{{ trip.tripClass }}</td>
+          <td>
+            <button (click)="bookTrip(trip)">Book</button>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="!sharedTrip.isOneway">
+        <ng-container *ngFor="let tripList of doubledTripList">
+          <tr *ngFor="let trip of tripList">
+            <td>{{ trip.placeOfDeparture }}</td>
+            <td>{{ trip.placeOfArrival }}</td>
+            <td>{{ trip.departureDate }}</td>
+            <td>{{ trip.tripClass }}</td>
+            <td>
+              <button (click)="bookTrip(trip)">Book</button>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </table>
+</mat-card>

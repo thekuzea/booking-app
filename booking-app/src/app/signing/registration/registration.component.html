@@ -1,0 +1,75 @@
+<div class="login-form">
+  <form [formGroup]="registrationForm">
+    <h2 class="text-center">Registration</h2>
+
+    <div class="alert alert-danger" role="alert" *ngIf="errorMessage">{{errorMessage}}</div>
+
+    <mat-form-field class="full-width margin-up-bottom-8">
+      <input matInput placeholder="Username" formControlName="username" [errorStateMatcher]="matcher"/>
+
+      <mat-error *ngIf="registrationForm.controls['username'].errors">
+        <div [hidden]="!registrationForm.controls['username'].hasError('required')">Username is <strong>required</strong></div>
+        <div [hidden]="!registrationForm.controls['username'].hasError('patternInvalid')">Username is <strong>invalid</strong></div>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width margin-up-bottom-8">
+      <input matInput placeholder="First name" formControlName="firstName" [errorStateMatcher]="matcher"/>
+
+      <mat-error *ngIf="registrationForm.controls['firstName'].errors">
+        <div [hidden]="!registrationForm.controls['firstName'].hasError('required')">First name is <strong>required</strong></div>
+        <div [hidden]="!registrationForm.controls['firstName'].hasError('patternInvalid')">First name is <strong>invalid</strong></div>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width margin-up-bottom-8">
+      <input matInput placeholder="Last name" formControlName="lastName" [errorStateMatcher]="matcher"/>
+
+      <mat-error *ngIf="registrationForm.controls['lastName'].errors">
+        <div [hidden]="!registrationForm.controls['lastName'].hasError('required')">Last name is <strong>required</strong></div>
+        <div [hidden]="!registrationForm.controls['lastName'].hasError('patternInvalid')">Last name is <strong>invalid</strong></div>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width margin-up-bottom-8">
+      <input matInput placeholder="Email" type="email" formControlName="email" [errorStateMatcher]="matcher"/>
+
+      <mat-error *ngIf="registrationForm.controls['email'].errors">
+        <div [hidden]="!registrationForm.controls['email'].hasError('required')">Email is <strong>required</strong></div>
+        <div [hidden]="!registrationForm.controls['email'].hasError('patternInvalid')">Email is <strong>invalid</strong></div>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width margin-up-bottom-8">
+      <input matInput placeholder="Password" type="password" formControlName="password" [errorStateMatcher]="matcher"/>
+
+      <mat-error *ngIf="registrationForm.controls['password'].errors">
+        <div [hidden]="!registrationForm.controls['password'].hasError('required')">Password is <strong>required</strong></div>
+        <div [hidden]="!registrationForm.controls['password'].hasError('minlength')">Password must be <strong>more then 6 symbols</strong></div>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width margin-up-bottom-8">
+      <input matInput placeholder="Confirm password" type="password" formControlName="confirmPassword"
+             [errorStateMatcher]="matcher"/>
+
+      <mat-error
+        *ngIf="registrationForm.controls['confirmPassword'].value == registrationForm.controls['password'].value">
+        Passwords <strong>don't match</strong></mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width margin-up-bottom-8">
+      <input matInput placeholder="Phone number" formControlName="phoneNumber" [errorStateMatcher]="matcher"/>
+
+      <mat-error *ngIf="registrationForm.controls['phoneNumber'].errors">
+        <div [hidden]="!registrationForm.controls['phoneNumber'].hasError('required')">Phone number is <strong>required</strong></div>
+        <div [hidden]="!registrationForm.controls['phoneNumber'].hasError('patternInvalid')">Phone number is <strong>invalid</strong></div>
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-group">
+      <button type="button" class="btn btn-primary btn-block" (click)="submit()">Register</button>
+    </div>
+  </form>
+</div>
+

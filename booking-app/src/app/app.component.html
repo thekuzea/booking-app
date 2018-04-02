@@ -1,0 +1,35 @@
+<mat-toolbar>
+  <span>Taliban Airlines</span>
+
+  <span class="nav-spacer"></span>
+
+  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+  <mat-menu #menu="matMenu">
+    <a routerLink="/login">
+      <button mat-menu-item>Login</button>
+    </a>
+    <a routerLink="#" (click)="authenticationService.logOut()">
+      <button mat-menu-item>Logout</button>
+    </a>
+    <a routerLink="/registration">
+      <button mat-menu-item>Registration</button>
+    </a>
+    <a routerLink="/">
+      <button mat-menu-item>Main page</button>
+    </a>
+    <a routerLink="/trip-list" [queryParams]="{search: 'false'}">
+      <button mat-menu-item>Trip list</button>
+    </a>
+    <a routerLink="/trip-search">
+      <button mat-menu-item>Trip search</button>
+    </a>
+    <a routerLink="/add-trip">
+      <button mat-menu-item>Add trip</button>
+    </a>
+    <a routerLink="/add-plane">
+      <button mat-menu-item>Add plane</button>
+    </a>
+  </mat-menu>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
