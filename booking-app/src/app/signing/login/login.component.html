@@ -1,0 +1,26 @@
+<div class="login-form">
+  <form [formGroup]="loginForm">
+    <h2 class="text-center">Log in</h2>
+
+    <div class="alert alert-danger" style="margin: 20px 0;" *ngIf="errorMessage">{{errorMessage}}</div>
+
+    <mat-form-field class="full-width margin-up-bottom-8">
+      <input matInput placeholder="Username" formControlName="username" [errorStateMatcher]="matcher" />
+
+      <mat-error *ngIf="loginForm.controls['username'].errors">Username is <strong>required</strong></mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width margin-up-bottom-8">
+      <input matInput placeholder="Password" type="password" formControlName="password" [errorStateMatcher]="matcher" />
+
+      <mat-error *ngIf="loginForm.controls['password'].errors">Password is <strong>required</strong></mat-error>
+    </mat-form-field>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary btn-login" [disabled]="loginForm.invalid" (click)="submit()">Sign in</button>
+      <a routerLink="/registration">
+        <button type="button" class="btn btn-primary btn-login">Sign up</button>
+      </a>
+    </div>
+  </form>
+</div>
