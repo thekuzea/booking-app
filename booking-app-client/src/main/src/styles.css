@@ -3,7 +3,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body {
-  background: url("/assets/background.jpg") no-repeat fixed;
+  background: url("/src/assets/background.jpg") no-repeat fixed;
   background-size: 1400px 900px;
 }
 
