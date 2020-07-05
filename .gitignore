@@ -1,10 +1,9 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
-
 # compiled output
 /dist
 /dist-server
 /tmp
 /out-tsc
+**/build/**
 
 # dependencies
 /node_modules
@@ -34,6 +33,7 @@
 npm-debug.log
 testem.log
 /typings
+.gradle
 
 # e2e
 /e2e/*.js
