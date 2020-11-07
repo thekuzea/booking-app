@@ -1,0 +1,76 @@
+register:
+  post:
+    tags:
+      - flight
+    summary: Register flight
+    operationId: registerFlight
+    parameters:
+      - name: tripId
+        in: query
+        required: true
+        schema:
+          type: string
+    responses:
+      201:
+        description: Flight successfully registered
+        content: { }
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+checkin:
+  post:
+    tags:
+      - flight
+    summary: Check in passenger for a flight
+    operationId: checkInPassenger
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CheckInPassengerResource'
+    responses:
+      201:
+        description: Passenger successfully checked in
+        content: { }
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+
+components:
+  schemas:
+    FlightResource:
+      type: object
+      properties:
+        id:
+          type: string
+        trip:
+          $ref: './trip.yml#/components/schemas/TripResource'
+        seats:
+          type: array
+          items:
+            $ref: '#/components/schemas/SeatResource'
+    CheckInPassengerResource:
+      type: object
+      properties:
+        flightId:
+          type: string
+        seat:
+          $ref: '#/components/schemas/SeatResource'
+    SeatResource:
+      type: object
+      properties:
+        column:
+          type: string
+          minLength: 1
+          maxLength: 1
+        row:
+          type: integer
+          minimum: 1
+          maximum: 60
+        isAvailable:
+          type: boolean
+        passengerId:
+          type: string

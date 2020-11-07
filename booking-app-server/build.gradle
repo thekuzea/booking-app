@@ -7,6 +7,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "org.openapitools:openapi-generator-gradle-plugin:6.2.1"
     }
 }
 
@@ -14,6 +15,7 @@ apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.openapi.generator'
 
 group = 'com.thekuzea'
 version = '0.0.1-SNAPSHOT'
@@ -33,5 +35,28 @@ dependencies {
 
     compile('org.codehaus.groovy:groovy')
 
+    compile('io.swagger:swagger-annotations:1.6.2')
+    compile('org.openapitools:jackson-databind-nullable:0.2.1')
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+openApiGenerate {
+    generatorName = 'spring'
+    inputSpec = "$rootDir/booking-app-server/src/main/resources/api/main.yml"
+    outputDir = "$buildDir/generated/openapi"
+    apiPackage = "${group}.booking.api"
+    invokerPackage = "${group}.booking.api"
+    modelPackage = "${group}.booking.api.dto"
+    configOptions = [
+            dateLibrary  : 'java8',
+            interfaceOnly: 'true'
+    ]
+}
+
+compileJava.dependsOn tasks.openApiGenerate
+
+sourceSets.main {
+    java.srcDir "$buildDir/generated/openapi/src/main/java"
+    ext.originalJavaSrcDirs = java.srcDirs
 }

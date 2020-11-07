@@ -1,0 +1,41 @@
+openapi: 3.0.0
+info:
+  title: Booking App
+  description: Booking App API
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:7070/booking/api'
+paths:
+  /auth:
+    $ref: './paths/authentication.yml#/authGenerateToken'
+
+  /profile:
+    $ref: './paths/profile.yml#/profile'
+  /profile/{id}:
+    $ref: './paths/profile.yml#/profileId'
+  /profile/detailed/{id}:
+    $ref: './paths/profile.yml#/detailedProfileId'
+
+  /privilege-group:
+    $ref: './paths/privilege-group.yml#/privilegeGroup'
+  /privilege-group/{id}:
+    $ref: './paths/privilege-group.yml#/privilegeGroupId'
+
+  /plane:
+    $ref: './paths/plane.yml#/plane'
+  /plane/{id}:
+    $ref: './paths/plane.yml#/planeId'
+
+  /trip:
+    $ref: './paths/trip.yml#/trip'
+  /trip/{id}:
+    $ref: './paths/trip.yml#/tripId'
+  /trip/detailed/{id}:
+    $ref: './paths/trip.yml#/detailedTripId'
+  /trip/order:
+    $ref: './paths/trip.yml#/orderTrip'
+
+  /flight/register:
+    $ref: './paths/flight.yml#/register'
+  /flight/checkin:
+    $ref: './paths/flight.yml#/checkin'

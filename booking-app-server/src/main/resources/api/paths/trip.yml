@@ -1,0 +1,220 @@
+trip:
+  get:
+    tags:
+      - trip
+    summary: Get all existing trips by parameters
+    operationId: getAllTripsByParameters
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/size'
+      - $ref: '../additional/parameter.yml#/components/parameters/page'
+    responses:
+      200:
+        description: List of found trips
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripPageResource'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+  post:
+    tags:
+      - trip
+    summary: Save new trip
+    operationId: saveNewTrip
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TripResource'
+    responses:
+      201:
+        description: Trip successfully saved
+        content: { }
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+tripId:
+  get:
+    tags:
+      - trip
+    summary: Get trip by id
+    operationId: getTripById
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/id'
+    responses:
+      200:
+        description: Trip was found by id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripResource'
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+  put:
+    tags:
+      - trip
+    summary: Update existing trip by id
+    operationId: updateTripById
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/id'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TripResource'
+    responses:
+      202:
+        description: Trip successfully updated
+        content: { }
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+  delete:
+    tags:
+      - trip
+    summary: Cancel existing trip by id
+    operationId: cancelTripById
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/id'
+    responses:
+      202:
+        description: Trip successfully cacnceled
+        content: { }
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+detailedTripId:
+  get:
+    tags:
+      - trip
+    summary: Get trip with extra details by id
+    operationId: getDetailedTripById
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/id'
+    responses:
+      200:
+        description: Trip with extra details was found by id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TripResource'
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+orderTrip:
+  put:
+    tags:
+      - trip
+    summary: Update existing trip by id by adding passenger who orders it
+    operationId: orderTrip
+    parameters:
+      - name: tripId
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: passengerId
+        in: query
+        required: true
+        schema:
+          type: string
+    responses:
+      202:
+        description: Trip successfully updated
+        content: { }
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+
+components:
+  schemas:
+    TripResource:
+      type: object
+      properties:
+        id:
+          type: string
+        tripClassType:
+          $ref: '#/components/schemas/TripClassType'
+        tripStatus:
+          $ref: '#/components/schemas/TripStatus'
+        countryCodeOfDeparture:
+          type: string
+          minLength: 3
+          maxLength: 3
+          pattern: '^([A-Z])+$'
+        cityOfDeparture:
+          type: string
+          minLength: 3
+          maxLength: 25
+          pattern: '^([a-zA-Z\s\,])+$'
+        departureDateTime:
+          type: string
+          pattern: '^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:Z|[+-][01]\d:[0-5]\d)$'
+        countryCodeOfArrival:
+          type: string
+          minLength: 3
+          maxLength: 3
+          pattern: '^([A-Z])+$'
+        cityOfArrival:
+          type: string
+          minLength: 3
+          maxLength: 25
+          pattern: '^([a-zA-Z\s\,])+$'
+        dateTimeOfArrival:
+          type: string
+          pattern: '^(?:[1-9]\d{3}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1\d|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[1-9]\d(?:0[48]|[2468][048]|[13579][26])|(?:[2468][048]|[13579][26])00)-02-29)T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:Z|[+-][01]\d:[0-5]\d)$'
+        plane:
+          $ref: './plane.yml#/components/schemas/PlaneResource'
+        passengers:
+          type: array
+          items:
+            $ref: './profile.yml#/components/schemas/ProfileResource'
+    OrderTrip:
+      type: object
+      properties:
+        id:
+          type: string
+        isOneWay:
+          type: boolean
+        trips:
+          type: array
+          items:
+            $ref: '#/components/schemas/TripResource'
+    TripPageResource:
+      type: object
+      properties:
+        size:
+          type: integer
+        page:
+          type: integer
+        total:
+          type: integer
+          format: int64
+        trips:
+          type: array
+          items:
+            $ref: '#/components/schemas/TripResource'
+    TripClassType:
+      type: string
+      enum:
+        - economy
+        - business
+        - first_class
+    TripStatus:
+      type: string
+      enum:
+        - created
+        - ready
+        - in_action
+        - finished
+        - canceled
+        - delayed
