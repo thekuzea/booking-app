@@ -1,0 +1,178 @@
+profile:
+  get:
+    tags:
+      - profile
+    summary: Get all existing profiles by parameters
+    operationId: getAllProfilesByParameters
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/size'
+      - $ref: '../additional/parameter.yml#/components/parameters/page'
+    responses:
+      200:
+        description: List of found profiles
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfilePageResource'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+  post:
+    tags:
+      - profile
+    summary: Register new profile
+    operationId: registerNewProfile
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RegisterProfileResource'
+    responses:
+      201:
+        description: Profile successfully registered
+        content: { }
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+profileId:
+  get:
+    tags:
+      - profile
+    summary: Get profile by username
+    operationId: getProfileByUsername
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/id'
+    responses:
+      200:
+        description: Profile was found by username
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileResource'
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+  put:
+    tags:
+      - profile
+    summary: Update existing profile by username
+    operationId: updateProfileByUsername
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/id'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProfileResource'
+    responses:
+      202:
+        description: Profile successfully updated
+        content: { }
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+detailedProfileId:
+  get:
+    tags:
+      - profile
+    summary: Get profile with extra details by username
+    operationId: getDetailedProfileByUsername
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/id'
+    responses:
+      200:
+        description: Profile with extra details was found by username
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileResource'
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+
+components:
+  schemas:
+    RegisterProfileResource:
+      type: object
+      properties:
+        username:
+          type: string
+          minLength: 4
+          maxLength: 20
+          pattern: '^([a-zA-Z0-9,_-])+$'
+        firstName:
+          type: string
+          minLength: 2
+          maxLength: 20
+          pattern: '^([a-zA-Z])+$'
+        lastName:
+          type: string
+          minLength: 2
+          maxLength: 20
+          pattern: '^([a-zA-Z])+$'
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        confirmPassword:
+          type: string
+    ProfileResource:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+          minLength: 4
+          maxLength: 20
+          pattern: '^([a-zA-Z0-9,_-])+$'
+        firstName:
+          type: string
+          minLength: 2
+          maxLength: 20
+          pattern: '^([a-zA-Z])+$'
+        lastName:
+          type: string
+          minLength: 2
+          maxLength: 20
+          pattern: '^([a-zA-Z])+$'
+        email:
+          type: string
+          format: email
+        phoneNumber:
+          type: string
+          minLength: 10
+          maxLength: 18
+          pattern: '^([\+0-9-])+$'
+        countryCode:
+          type: string
+          minLength: 3
+          maxLength: 3
+          pattern: '^([A-Z])+$'
+        city:
+          type: string
+          minLength: 3
+          maxLength: 25
+          pattern: '^([a-zA-Z\s\,])+$'
+        privilegeGroup:
+          $ref: './privilege-group.yml#/components/schemas/PrivilegeGroupResource'
+    ProfilePageResource:
+      type: object
+      properties:
+        size:
+          type: integer
+        page:
+          type: integer
+        total:
+          type: integer
+          format: int64
+        profiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProfileResource'

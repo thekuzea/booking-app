@@ -1,0 +1,127 @@
+plane:
+  get:
+    tags:
+      - plane
+    summary: Get all existing planes by parameters
+    operationId: getAllPlanesByParameters
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/size'
+      - $ref: '../additional/parameter.yml#/components/parameters/page'
+    responses:
+      200:
+        description: List of found trips
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanePageResource'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+  post:
+    tags:
+      - plane
+    summary: Save new plane
+    operationId: saveNewPlane
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PlaneResource'
+    responses:
+      201:
+        description: Plane successfully saved
+        content: { }
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+planeId:
+  get:
+    tags:
+      - plane
+    summary: Get plane by id
+    operationId: getPlaneById
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/id'
+    responses:
+      200:
+        description: Plane was found by id
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaneResource'
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+  delete:
+    tags:
+      - plane
+    summary: Decommission existing plane by id
+    operationId: decommissionPlaneById
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/id'
+    responses:
+      202:
+        description: Plane successfully decommissioned
+        content: { }
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+
+components:
+  schemas:
+    PlaneResource:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          minLength: 3
+          maxLength: 25
+          pattern: '^([a-zA-Z0-9\s])+$'
+        planeNumber:
+          type: string
+          minLength: 3
+          maxLength: 10
+          pattern: '^([A-Z0-9])+$'
+        originCountryCode:
+          type: string
+          minLength: 3
+          maxLength: 3
+          pattern: '^([A-Z])+$'
+        technicalStatus:
+          $ref: '#/components/schemas/TechnicalStatus'
+        seatsAmount:
+          type: integer
+          minimum: 20
+          maximum: 600
+        columnsAmount:
+          type: integer
+          minimum: 1
+          maximum: 10
+        rowsAmount:
+          type: integer
+          minimum: 2
+          maximum: 60
+    PlanePageResource:
+      type: object
+      properties:
+        size:
+          type: integer
+        page:
+          type: integer
+        total:
+          type: integer
+          format: int64
+        planes:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlaneResource'
+    TechnicalStatus:
+      type: string
+      enum:
+        - available
+        - decommissioned

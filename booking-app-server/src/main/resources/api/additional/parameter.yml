@@ -1,0 +1,23 @@
+components:
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+    size:
+      name: size
+      in: query
+      required: true
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 100
+    page:
+      name: page
+      in: query
+      required: true
+      schema:
+        type: integer
+        minimum: 0

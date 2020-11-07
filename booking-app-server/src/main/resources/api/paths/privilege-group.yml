@@ -1,0 +1,95 @@
+privilegeGroup:
+  get:
+    tags:
+      - privilege
+      - group
+    summary: Get all existing privilege groups by parameters
+    operationId: getAllPrivilegeGroupsByParameters
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/size'
+      - $ref: '../additional/parameter.yml#/components/parameters/page'
+    responses:
+      200:
+        description: List of found privilege groups
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PrivilegeGroupPageResource'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+  post:
+    tags:
+      - privilege
+      - group
+    summary: Save new privilege group
+    operationId: saveNewPrivilegeGroup
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PrivilegeGroupResource'
+    responses:
+      201:
+        description: Privilege group successfully added
+        content: { }
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+privilegeGroupId:
+  put:
+    tags:
+      - privilege
+      - group
+    summary: Update existing privilege group by id
+    operationId: updatePrivilegeGroupById
+    parameters:
+      - $ref: '../additional/parameter.yml#/components/parameters/id'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PrivilegeGroupResource'
+    responses:
+      202:
+        description: Privilege group successfully updated
+        content: { }
+      400:
+        $ref: '../additional/error.yml#/components/responses/badRequest'
+      500:
+        $ref: '../additional/error.yml#/components/responses/internalServerError'
+
+components:
+  schemas:
+    PrivilegeGroupResource:
+      type: object
+      properties:
+        id:
+          type: string
+        groupName:
+          type: string
+          minLength: 3
+          maxLength: 30
+          pattern: '^([a-zA-Z\s]).+$'
+        isDefaultGroup:
+          type: boolean
+        privileges:
+          type: array
+          items:
+            type: string
+    PrivilegeGroupPageResource:
+      type: object
+      properties:
+        size:
+          type: integer
+        page:
+          type: integer
+        total:
+          type: integer
+          format: int64
+        privilegeGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrivilegeGroupResource'

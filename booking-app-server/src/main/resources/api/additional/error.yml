@@ -1,0 +1,30 @@
+components:
+  responses:
+    badRequest:
+      description: Entity wasn't found by id or validation failure
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResultResource'
+    internalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResultResource'
+
+  schemas:
+    ValidationErrorResource:
+      type: object
+      properties:
+        source:
+          type: string
+        details:
+          type: string
+    ErrorResultResource:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationErrorResource'
