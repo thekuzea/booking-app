@@ -1,0 +1,26 @@
+server:
+  port: 7070
+  servlet:
+    context-path: /booking/api
+
+spring:
+  main:
+    banner-mode: off
+  output:
+    ansi:
+      enabled: always
+  data:
+    mongodb:
+      database: bookingdb
+
+logging:
+  level:
+    com.thekuzea.booking: info
+
+booking-app:
+  settings:
+    security:
+      jwt:
+        access-validity-token-seconds: 5*60*60
+        issuer: thekuzea
+        signing-key: bookingAppKey
