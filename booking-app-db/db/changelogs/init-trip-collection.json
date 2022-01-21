@@ -1,0 +1,74 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "1",
+        "author": "thekuzea",
+        "comment": "Create trip collection",
+        "changes": [
+          {
+            "createCollection": {
+              "collectionName": "trips",
+              "options": {
+                "$rawJson": {
+                  "validator": {
+                    "$jsonSchema": {
+                      "bsonType": "object",
+                      "required": [
+                        "tripClassType",
+                        "tripStatus",
+                        "countryCodeOfDeparture",
+                        "cityOfDeparture",
+                        "departureDateTime",
+                        "countryCodeOfArrival",
+                        "cityOfArrival",
+                        "dateTimeOfArrival",
+                        "planeId"
+                      ],
+                      "properties": {
+                        "tripClassType": {
+                          "bsonType": "string"
+                        },
+                        "tripStatus": {
+                          "bsonType": "string"
+                        },
+                        "countryCodeOfDeparture": {
+                          "bsonType": "string"
+                        },
+                        "cityOfDeparture": {
+                          "bsonType": "string"
+                        },
+                        "departureDateTime": {
+                          "bsonType": "date"
+                        },
+                        "countryCodeOfArrival": {
+                          "bsonType": "string"
+                        },
+                        "cityOfArrival": {
+                          "bsonType": "string"
+                        },
+                        "dateTimeOfArrival": {
+                          "bsonType": "date"
+                        },
+                        "planeId": {
+                          "bsonType": "string",
+                          "description": "Plane ID assigned to profile"
+                        },
+                        "passengerIds": {
+                          "bsonType": "array",
+                          "description": "List of passenger IDs subscribed on the trip"
+                        }
+                      }
+                    }
+                  },
+                  "validationAction": "error",
+                  "validationLevel": "strict"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

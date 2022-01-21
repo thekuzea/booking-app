@@ -1,0 +1,24 @@
+{
+  "databaseChangeLog": [
+    {
+      "include": {
+        "file": "db/changelogs/init-privilege-group-collection.json"
+      }
+    },
+    {
+      "include": {
+        "file": "db/changelogs/init-profile-collection.json"
+      }
+    },
+    {
+      "include": {
+        "file": "db/changelogs/init-trip-collection.json"
+      }
+    },
+    {
+      "include": {
+        "file": "db/changelogs/init-plane-collection.json"
+      }
+    }
+  ]
+}

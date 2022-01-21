@@ -1,2 +1,3 @@
 include 'booking-app-server'
 include 'booking-app-client'
+include 'booking-app-db'

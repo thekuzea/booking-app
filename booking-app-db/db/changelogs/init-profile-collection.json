@@ -1,0 +1,67 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "1",
+        "author": "thekuzea",
+        "comment": "Create profile collection",
+        "changes": [
+          {
+            "createCollection": {
+              "collectionName": "profiles",
+              "options": {
+                "$rawJson": {
+                  "validator": {
+                    "$jsonSchema": {
+                      "bsonType": "object",
+                      "required": [
+                        "username",
+                        "firstName",
+                        "lastName",
+                        "email",
+                        "password",
+                        "privilegeGroupId"
+                      ],
+                      "properties": {
+                        "username": {
+                          "bsonType": "string"
+                        },
+                        "firstName": {
+                          "bsonType": "string"
+                        },
+                        "lastName": {
+                          "bsonType": "string"
+                        },
+                        "email": {
+                          "bsonType": "string"
+                        },
+                        "password": {
+                          "bsonType": "string"
+                        },
+                        "phoneNumber": {
+                          "bsonType": "string"
+                        },
+                        "countryCode": {
+                          "bsonType": "string"
+                        },
+                        "city": {
+                          "bsonType": "string"
+                        },
+                        "privilegeGroupId": {
+                          "bsonType": "string",
+                          "description": "Privilege group ID assigned to profile"
+                        }
+                      }
+                    }
+                  },
+                  "validationAction": "error",
+                  "validationLevel": "strict"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
