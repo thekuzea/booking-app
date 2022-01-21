@@ -1,0 +1,61 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "1",
+        "author": "thekuzea",
+        "comment": "Create plane collection",
+        "changes": [
+          {
+            "createCollection": {
+              "collectionName": "planes",
+              "options": {
+                "$rawJson": {
+                  "validator": {
+                    "$jsonSchema": {
+                      "bsonType": "object",
+                      "required": [
+                        "name",
+                        "planeNumber",
+                        "originCountryCode",
+                        "technicalStatus",
+                        "seatsAmount",
+                        "columnsAmount",
+                        "rowsAmount"
+                      ],
+                      "properties": {
+                        "name": {
+                          "bsonType": "string"
+                        },
+                        "planeNumber": {
+                          "bsonType": "string"
+                        },
+                        "originCountryCode": {
+                          "bsonType": "string"
+                        },
+                        "technicalStatus": {
+                          "bsonType": "string"
+                        },
+                        "seatsAmount": {
+                          "bsonType": "int"
+                        },
+                        "columnsAmount": {
+                          "bsonType": "int"
+                        },
+                        "rowsAmount": {
+                          "bsonType": "int"
+                        }
+                      }
+                    }
+                  },
+                  "validationAction": "error",
+                  "validationLevel": "strict"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

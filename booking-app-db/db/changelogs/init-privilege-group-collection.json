@@ -1,0 +1,79 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "1",
+        "author": "thekuzea",
+        "comment": "Create privilege group collection",
+        "changes": [
+          {
+            "createCollection": {
+              "collectionName": "privilege_groups",
+              "options": {
+                "$rawJson": {
+                  "validator": {
+                    "$jsonSchema": {
+                      "bsonType": "object",
+                      "required": [
+                        "groupName",
+                        "privileges"
+                      ],
+                      "properties": {
+                        "groupName": {
+                          "bsonType": "string",
+                          "description": "Group name"
+                        },
+                        "privileges": {
+                          "bsonType": "array",
+                          "description": "List of privileges assigned to group"
+                        },
+                        "isDefaultGroup": {
+                          "bsonType": "bool",
+                          "description": "Indicate if group is used by default on profile creation"
+                        }
+                      }
+                    }
+                  },
+                  "validationAction": "error",
+                  "validationLevel": "strict"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "changeSet": {
+        "id": "2",
+        "author": "thekuzea",
+        "comment": "Populate privilege group collection with default data",
+        "changes": [
+          {
+            "insertMany": {
+              "collectionName": "privilege_groups",
+              "documents": {
+                "$rawJson": [
+                  {
+                    "groupName": "Administrator",
+                    "privileges": [
+                      "UNDEFINED"
+                    ]
+                  },
+                  {
+                    "groupName": "User",
+                    "privileges": [
+                      "VIEW_TRIP",
+                      "ORDER_TRIP"
+                    ],
+                    "isDefaultGroup": true
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

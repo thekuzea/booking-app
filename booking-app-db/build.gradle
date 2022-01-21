@@ -1,0 +1,31 @@
+plugins {
+    id 'org.liquibase.gradle' version '2.1.0'
+}
+
+group = 'com.thekuzea'
+version = '0.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    liquibaseCoreVersion = "4.5.0"
+    liquibaseMongoDbVersion = "4.5.0"
+    picocliVersion = "4.6.1"
+}
+
+dependencies {
+    liquibaseRuntime "org.liquibase:liquibase-core:${liquibaseCoreVersion}"
+    liquibaseRuntime "org.liquibase.ext:liquibase-mongodb:${liquibaseMongoDbVersion}"
+    liquibaseRuntime "info.picocli:picocli:${picocliVersion}"
+}
+
+liquibase {
+    activities {
+        mainActivity {
+            changeLogFile 'db/changelogs/main.json'
+            url 'mongodb://localhost:27017/bookingdb'
+        }
+    }
+}

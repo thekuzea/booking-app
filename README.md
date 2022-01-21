@@ -10,5 +10,13 @@
 `.\gradlew clean build`
 
 ###
+#### Apply database migration
+`.\gradlew booking-app-db:dropAll`
+
+###
+#### Apply database migration
+`.\gradlew booking-app-db:update`
+
+###
 #### Run backend server
 `.\gradlew booking-app-server:bootRun`
