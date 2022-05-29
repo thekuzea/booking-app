@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.factory.Mappers;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +25,8 @@ import com.thekuzea.booking.support.alert.AlertService;
 @RequiredArgsConstructor
 public class PlaneServiceImpl implements PlaneService {
 
+    private final PlaneMapper planeMapper = Mappers.getMapper(PlaneMapper.class);
+
     private final PlaneRepository planeRepository;
 
     private final AlertService alertService;
@@ -31,7 +34,7 @@ public class PlaneServiceImpl implements PlaneService {
     @Override
     public PlaneResource getPlaneById(final String id) {
         final Plane plane = validateAndGetPlaneById(id);
-        return PlaneMapper.modelToResource(plane);
+        return planeMapper.modelToResource(plane);
     }
 
     @Override
@@ -41,7 +44,7 @@ public class PlaneServiceImpl implements PlaneService {
 
         final List<PlaneResource> planeResources = planePage.getContent()
                 .stream()
-                .map(PlaneMapper::modelToResource)
+                .map(planeMapper::modelToResource)
                 .collect(Collectors.toList());
 
         return new PlanePageResource()
@@ -65,7 +68,7 @@ public class PlaneServiceImpl implements PlaneService {
             alertService.logAndThrowException(AlertCode.B101, IllegalArgumentException.class, LogLevel.WARN);
         }
 
-        final Plane mappedPlane = PlaneMapper.resourceToModel(planeResource);
+        final Plane mappedPlane = planeMapper.resourceToModel(planeResource);
         mappedPlane.setTechnicalStatus(technicalStatus);
         planeRepository.save(mappedPlane);
     }

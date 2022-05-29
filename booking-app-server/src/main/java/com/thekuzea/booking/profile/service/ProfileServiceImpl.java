@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.factory.Mappers;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +27,8 @@ import com.thekuzea.booking.support.alert.AlertService;
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
 
+    private final ProfileMapper profileMapper = Mappers.getMapper(ProfileMapper.class);
+
     private final ProfileRepository profileRepository;
 
     private final PrivilegeGroupService privilegeGroupService;
@@ -37,7 +40,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public ProfileResource getProfileByUsername(final String username, final boolean isDetailed) {
         final Profile profile = validateAndGetProfileByUsername(username);
-        final ProfileResource resource = ProfileMapper.modelToResource(profile);
+        final ProfileResource resource = profileMapper.modelToResource(profile);
 
         if (isDetailed) {
             final PrivilegeGroupResource privilegeGroupResource =
@@ -53,7 +56,7 @@ public class ProfileServiceImpl implements ProfileService {
     public List<ProfileResource> getProfilesByIds(final List<String> profileIds) {
         return profileRepository.findAllById(profileIds)
                 .stream()
-                .map(ProfileMapper::modelToResource)
+                .map(profileMapper::modelToResource)
                 .collect(Collectors.toList());
     }
 
@@ -64,7 +67,7 @@ public class ProfileServiceImpl implements ProfileService {
 
         final List<ProfileResource> profileResources = profilePage.getContent()
                 .stream()
-                .map(ProfileMapper::modelToResource)
+                .map(profileMapper::modelToResource)
                 .collect(Collectors.toList());
 
         return new ProfilePageResource()
@@ -83,7 +86,7 @@ public class ProfileServiceImpl implements ProfileService {
 
         validatePasswords(profileResource);
 
-        final Profile profile = ProfileMapper.registerResourceToModel(profileResource);
+        final Profile profile = profileMapper.registerResourceToModel(profileResource);
         final String encryptedPassword = passwordEncoderService.encodePassword(profileResource.getPassword());
 
         profile.setPassword(encryptedPassword);

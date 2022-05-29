@@ -75,6 +75,7 @@ components:
           pattern: '^([a-zA-Z\s]).+$'
         isDefaultGroup:
           type: boolean
+          default: false
         privileges:
           type: array
           items:

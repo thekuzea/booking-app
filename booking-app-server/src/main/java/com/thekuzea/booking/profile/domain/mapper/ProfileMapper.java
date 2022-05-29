@@ -1,35 +1,22 @@
 package com.thekuzea.booking.profile.domain.mapper;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import com.thekuzea.booking.api.dto.ProfileResource;
 import com.thekuzea.booking.api.dto.RegisterProfileResource;
 import com.thekuzea.booking.profile.domain.model.Profile;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ProfileMapper {
+@Mapper
+public interface ProfileMapper {
 
-    public static Profile registerResourceToModel(final RegisterProfileResource resource) {
-        final Profile model = new Profile();
-        model.setUsername(resource.getUsername());
-        model.setFirstName(resource.getFirstName());
-        model.setLastName(resource.getLastName());
-        model.setEmail(resource.getEmail());
-        model.setPassword(resource.getPassword());
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "phoneNumber", ignore = true)
+    @Mapping(target = "countryCode", ignore = true)
+    @Mapping(target = "city", ignore = true)
+    @Mapping(target = "privilegeGroupId", ignore = true)
+    Profile registerResourceToModel(RegisterProfileResource resource);
 
-        return model;
-    }
-
-    public static ProfileResource modelToResource(final Profile model) {
-        return new ProfileResource()
-                .id(model.getId())
-                .username(model.getUsername())
-                .firstName(model.getFirstName())
-                .lastName(model.getLastName())
-                .email(model.getEmail())
-                .phoneNumber(model.getPhoneNumber())
-                .countryCode(model.getCountryCode())
-                .city(model.getCity());
-    }
+    @Mapping(target = "privilegeGroup", ignore = true)
+    ProfileResource modelToResource(Profile model);
 }
