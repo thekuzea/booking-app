@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.factory.Mappers;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +30,8 @@ import com.thekuzea.booking.support.util.DateTimeUtil;
 @RequiredArgsConstructor
 public class TripServiceImpl implements TripService {
 
+    private final TripMapper tripMapper = Mappers.getMapper(TripMapper.class);
+
     private final TripRepository tripRepository;
 
     private final PlaneService planeService;
@@ -46,7 +49,7 @@ public class TripServiceImpl implements TripService {
     @Override
     public TripResource getTripById(final String id, final boolean isDetailed) {
         final Trip trip = validateAndGetTripById(id);
-        final TripResource tripResource = TripMapper.modelToResource(trip);
+        final TripResource tripResource = tripMapper.modelToResource(trip);
 
         if (isDetailed) {
             final PlaneResource planeResource = planeService.getPlaneById(trip.getPlaneId());
@@ -66,7 +69,7 @@ public class TripServiceImpl implements TripService {
 
         final List<TripResource> tripResources = tripPage.getContent()
                 .stream()
-                .map(TripMapper::modelToResource)
+                .map(tripMapper::modelToResource)
                 .collect(Collectors.toList());
 
         return new TripPageResource()
@@ -93,7 +96,7 @@ public class TripServiceImpl implements TripService {
             alertService.logAndThrowException(AlertCode.B201, IllegalArgumentException.class, LogLevel.WARN);
         }
 
-        final Trip mappedTrip = TripMapper.resourceToModel(tripResource);
+        final Trip mappedTrip = tripMapper.resourceToModel(tripResource);
         mappedTrip.setTripStatus(TripStatus.CREATED);
         mappedTrip.setPassengerIds(Collections.emptyList());
 
@@ -103,7 +106,7 @@ public class TripServiceImpl implements TripService {
     @Override
     public void updateTripById(final String id, final TripResource tripResource) {
         final Trip trip = validateAndGetTripById(id);
-        final Trip mappedTrip = TripMapper.resourceToModel(tripResource);
+        final Trip mappedTrip = tripMapper.resourceToModel(tripResource);
 
         trip.setTripClassType(mappedTrip.getTripClassType());
 

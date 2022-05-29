@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.factory.Mappers;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +23,8 @@ import com.thekuzea.booking.support.alert.AlertService;
 @Service
 @RequiredArgsConstructor
 public class PrivilegeGroupServiceImpl implements PrivilegeGroupService {
+
+    private final PrivilegeGroupMapper privilegeGroupMapper = Mappers.getMapper(PrivilegeGroupMapper.class);
 
     private final PrivilegeGroupRepository privilegeGroupRepository;
 
@@ -49,7 +52,7 @@ public class PrivilegeGroupServiceImpl implements PrivilegeGroupService {
             alertService.logAndThrowException(AlertCode.B301, IllegalArgumentException.class, LogLevel.WARN, id);
         }
 
-        return PrivilegeGroupMapper.modelToResource(foundPrivilegeGroup.get());
+        return privilegeGroupMapper.modelToResource(foundPrivilegeGroup.get());
     }
 
     @Override
@@ -59,7 +62,7 @@ public class PrivilegeGroupServiceImpl implements PrivilegeGroupService {
 
         final List<PrivilegeGroupResource> privilegeGroupResources = privilegeGroupPage.getContent()
                 .stream()
-                .map(PrivilegeGroupMapper::modelToResource)
+                .map(privilegeGroupMapper::modelToResource)
                 .collect(Collectors.toList());
 
         return new PrivilegeGroupPageResource()
@@ -83,7 +86,7 @@ public class PrivilegeGroupServiceImpl implements PrivilegeGroupService {
             alertService.logAndThrowException(AlertCode.B303, IllegalArgumentException.class, LogLevel.WARN);
         }
 
-        final PrivilegeGroup privilegeGroup = PrivilegeGroupMapper.resourceToModel(privilegeGroupResource);
+        final PrivilegeGroup privilegeGroup = privilegeGroupMapper.resourceToModel(privilegeGroupResource);
         privilegeGroupRepository.save(privilegeGroup);
     }
 
