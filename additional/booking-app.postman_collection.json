@@ -1,0 +1,801 @@
+{
+	"info": {
+		"_postman_id": "61d1ad12-7b05-4099-80c0-b2ab1f4e6520",
+		"name": "booking-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Kuzea\",\r\n    \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7070/booking/api/auth",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7070/booking/api/profile/Kuzea",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"profile",
+						"Kuzea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get detailed profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7070/booking/api/profile/detailed/Kuzea",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"profile",
+						"detailed",
+						"Kuzea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get profiles",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7070/booking/api/profile?size=1&page=0",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"profile"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "1"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save profile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Kuzea\",\r\n    \"firstName\": \"CDV\",\r\n    \"lastName\": \"Tech\",\r\n    \"email\": \"test@test.com\",\r\n    \"password\": \"1234\",\r\n    \"confirmPassword\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7070/booking/api/profile",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Kuzea\",\r\n    \"firstName\": \"CDV\",\r\n    \"lastName\": \"Tech\",\r\n    \"email\": \"test@test.com\",\r\n    \"phoneNumber\": \"+345843858\",\r\n    \"countryCode\": \"RUS\",\r\n    \"city\": \"Saint Petersburg\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7070/booking/api/profile/Kuzea",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"profile",
+						"Kuzea"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "privilege groups",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7070/booking/api/privilege-group?size=1&page=0",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"privilege-group"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "1"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save privilege group",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"groupName\": \"Moderator\",\r\n    \"privileges\": [\r\n        \"UNKNOWN\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7070/booking/api/privilege-group",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"privilege-group"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update privilege group",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"groupName\": \"Moderator\",\r\n    \"isDefaultGroup\": false,\r\n    \"privileges\": [\r\n        \"BAN\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7070/booking/api/privilege-group/61f029837029be5a97a9fcbc",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"privilege-group",
+						"61f029837029be5a97a9fcbc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get plane",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7070/booking/api/plane/61efbdc7ad14362e3330109d",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"plane",
+						"61efbdc7ad14362e3330109d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get planes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7070/booking/api/plane?size=1&page=0",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"plane"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "1"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save plane",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzM4NzQ0OCwiZXhwIjoxNjQzNDA1NDQ4fQ.XOWMFiJH2J7NJxmFNJxx-Nndw-gKALt2YX9PqtyJch8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Airbus A380\",\r\n    \"planeNumber\": \"2132133\",\r\n    \"originCountryCode\": \"RUS\",\r\n    \"seatsAmount\": 150,\r\n    \"rowsAmount\": 20,\r\n    \"columnsAmount\": 6\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7070/booking/api/plane",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"plane"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "decommission plane",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:7070/booking/api/plane/61efb867ad6ab26dcd6ff31b",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"plane",
+						"61efb867ad6ab26dcd6ff31b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get trips",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7070/booking/api/trip?size=1&page=0",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"trip"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "1"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get trip",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7070/booking/api/trip/61f11ba5b6dff743a627391e",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"trip",
+						"61f11ba5b6dff743a627391e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get detailed trip",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:7070/booking/api/trip/detailed/61f16805448f2a3adba1e95d",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"trip",
+						"detailed",
+						"61f16805448f2a3adba1e95d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save trip",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzM4NzQ0OCwiZXhwIjoxNjQzNDA1NDQ4fQ.XOWMFiJH2J7NJxmFNJxx-Nndw-gKALt2YX9PqtyJch8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tripClassType\": \"business\",\r\n    \"countryCodeOfDeparture\": \"RUS\",\r\n    \"cityOfDeparture\": \"Moscow\",\r\n    \"departureDateTime\": \"2022-01-26T11:59:39+02:00\",\r\n    \"countryCodeOfArrival\": \"RUS\",\r\n    \"cityOfArrival\": \"Saint Petersburg\",\r\n    \"dateTimeOfArrival\": \"2022-01-26T11:59:39+02:00\",\r\n    \"plane\": {\r\n        \"id\": \"61f41a8b1814cd2caa56565f\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7070/booking/api/trip",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"trip"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update trip",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:7070/booking/api/trip/order?tripId=61f16805448f2a3adba1e95d&passengerId=61f11f7c3188e81f01b09de4",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"trip",
+						"order"
+					],
+					"query": [
+						{
+							"key": "tripId",
+							"value": "61f16805448f2a3adba1e95d"
+						},
+						{
+							"key": "passengerId",
+							"value": "61f11f7c3188e81f01b09de4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "order trip",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tripClassType\": \"business\",\r\n    \"countryCodeOfDeparture\": \"RUS\",\r\n    \"cityOfDeparture\": \"Moscow\",\r\n    \"departureDateTime\": \"2022-01-26T11:59:39+02:00\",\r\n    \"countryCodeOfArrival\": \"RUS\",\r\n    \"cityOfArrival\": \"Saint Petersburg\",\r\n    \"dateTimeOfArrival\": \"2022-01-26T11:59:39+05:00\",\r\n    \"plane\": {\r\n        \"id\": \"61eff67c8e565014504f4c35\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7070/booking/api/trip/61f16805448f2a3adba1e95d",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"trip",
+						"61f16805448f2a3adba1e95d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cancel trip",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzE5NTg1MSwiZXhwIjoxNjQzMjEzODUxfQ.FyCgsqYTCqFinK8zcmWG4PEJ-2EbcWX4_UdFU0nO75E",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:7070/booking/api/trip/61f11ba5b6dff743a627391e",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"trip",
+						"61f11ba5b6dff743a627391e"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "flight register",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzM4NzQ0OCwiZXhwIjoxNjQzNDA1NDQ4fQ.XOWMFiJH2J7NJxmFNJxx-Nndw-gKALt2YX9PqtyJch8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:7070/booking/api/flight/register?tripId=61f41ac81814cd2caa565660",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"flight",
+						"register"
+					],
+					"query": [
+						{
+							"key": "tripId",
+							"value": "61f41ac81814cd2caa565660"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "flight check-in",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJLdXplYSIsInNjb3BlcyI6W3siYXV0aG9yaXR5IjoiT1JERVJfVFJJUCJ9LHsiYXV0aG9yaXR5IjoiVklFV19UUklQIn1dLCJpc3MiOiJ0aGVrdXplYSIsImlhdCI6MTY0MzM4NzQ0OCwiZXhwIjoxNjQzNDA1NDQ4fQ.XOWMFiJH2J7NJxmFNJxx-Nndw-gKALt2YX9PqtyJch8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"flightId\": \"61f41f07a665a42c35683532\",\r\n    \"seat\": {\r\n        \"row\": 1,\r\n        \"column\": \"A\",\r\n        \"passengerId\": \"61f41a331814cd2caa56565e\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:7070/booking/api/flight/checkin",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"booking",
+						"api",
+						"flight",
+						"checkin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
