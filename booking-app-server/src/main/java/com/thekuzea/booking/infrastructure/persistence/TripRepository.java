@@ -1,32 +1,44 @@
 package com.thekuzea.booking.infrastructure.persistence;
 
-import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.repository.RepositoryDefinition;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
-import com.thekuzea.booking.api.dto.TripClassType;
 import com.thekuzea.booking.flight.domain.model.Trip;
 
-@RepositoryDefinition(domainClass = Trip.class, idClass = String.class)
-public interface TripRepository {
+@Repository
+@RequiredArgsConstructor
+public class TripRepository {
 
-    Optional<Trip> findById(String id);
+    private final MongoTripRepository mongoTripRepository;
 
-    Page<Trip> findAll(Pageable pageable);
+    public boolean existsByExample(final Trip trip) {
+        final Example<Trip> tripExample = Example.of(trip);
+        final List<Trip> trips = mongoTripRepository.findAll(tripExample);
 
-    @Query(value = "{'tripClassType': ?0, 'countryCodeOfDeparture': ?1, 'cityOfDeparture': ?2, 'departureDateTime': ?3, 'countryCodeOfArrival': ?4, 'cityOfArrival': ?5, 'dateTimeOfArrival': ?6, 'planeId': ?7}", exists = true)
-    boolean existsByParameters(TripClassType tripClassType,
-                               String countryCodeOfDeparture,
-                               String cityOfDeparture,
-                               OffsetDateTime departureDateTime,
-                               String countryCodeOfArrival,
-                               String cityOfArrival,
-                               OffsetDateTime dateTimeOfArrival,
-                               String planeId);
+        return !CollectionUtils.isEmpty(trips);
+    }
 
-    void save(Trip trip);
+    public Optional<Trip> findById(final String id) {
+        return mongoTripRepository.findById(id);
+    }
+
+    public Page<Trip> findAll(final Pageable pageable) {
+        return mongoTripRepository.findAll(pageable);
+    }
+
+    public void save(final Trip trip) {
+        mongoTripRepository.save(trip);
+    }
+
+    interface MongoTripRepository extends MongoRepository<Trip, String> {
+
+    }
 }

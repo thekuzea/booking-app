@@ -13,7 +13,10 @@ import com.thekuzea.booking.infrastructure.persistence.converter.OffsetDateTimeR
 import com.thekuzea.booking.infrastructure.persistence.converter.OffsetDateTimeWriteConverter;
 
 @Configuration
-@EnableMongoRepositories(basePackages = "com.thekuzea.booking.infrastructure.persistence")
+@EnableMongoRepositories(
+        basePackages = "com.thekuzea.booking.infrastructure.persistence",
+        considerNestedRepositories = true
+)
 public class PersistenceConfig {
 
     @Bean
