@@ -32,7 +32,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         final Optional<Profile> foundProfile = profileRepository.findByUsername(username);
 
         if (!foundProfile.isPresent()) {
-            alertService.logAndThrowException(AlertCode.S001, IllegalArgumentException.class, LogLevel.WARN);
+            final String errorMessage = alertService.logAlertByCode(AlertCode.S001, LogLevel.WARN);
+            throw new IllegalArgumentException(errorMessage);
         }
 
         final Profile profile = foundProfile.get();

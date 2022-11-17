@@ -33,7 +33,8 @@ public class FlightServiceImpl implements FlightService {
     public void registerFlight(final String tripId) {
         final Optional<Flight> foundFlight = flightRepository.findByTripId(tripId);
         if (foundFlight.isPresent()) {
-            alertService.logAndThrowException(AlertCode.B401, IllegalArgumentException.class, LogLevel.WARN);
+            final String errorMessage = alertService.logAlertByCode(AlertCode.B401, LogLevel.WARN);
+            throw new IllegalArgumentException(errorMessage);
         }
 
         final String planeId = tripService.getPlaneIdForTrip(tripId);
@@ -53,7 +54,8 @@ public class FlightServiceImpl implements FlightService {
         final String flightId = checkInPassengerResource.getFlightId();
         final Optional<Flight> foundFlight = flightRepository.findById(flightId);
         if (!foundFlight.isPresent()) {
-            alertService.logAndThrowException(AlertCode.B402, IllegalArgumentException.class, LogLevel.WARN, flightId);
+            final String errorMessage = alertService.logAlertByCode(AlertCode.B402, LogLevel.WARN, flightId);
+            throw new IllegalArgumentException(errorMessage);
         }
 
         final Flight flight = foundFlight.get();

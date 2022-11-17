@@ -93,7 +93,8 @@ public class TripServiceImpl implements TripService {
         );
 
         if (tripExists) {
-            alertService.logAndThrowException(AlertCode.B201, IllegalArgumentException.class, LogLevel.WARN);
+            final String errorMessage = alertService.logAlertByCode(AlertCode.B201, LogLevel.WARN);
+            throw new IllegalArgumentException(errorMessage);
         }
 
         final Trip mappedTrip = tripMapper.resourceToModel(tripResource);
@@ -141,10 +142,11 @@ public class TripServiceImpl implements TripService {
 
     private Trip validateAndGetTripById(final String id) {
         final Optional<Trip> foundTrip = tripRepository.findById(id);
-        if (!foundTrip.isPresent()) {
-            alertService.logAndThrowException(AlertCode.B202, IllegalArgumentException.class, LogLevel.WARN, id);
+        if (foundTrip.isPresent()) {
+            return foundTrip.get();
         }
 
-        return foundTrip.get();
+        final String errorMessage = alertService.logAlertByCode(AlertCode.B202, LogLevel.WARN, id);
+        throw new IllegalArgumentException(errorMessage);
     }
 }

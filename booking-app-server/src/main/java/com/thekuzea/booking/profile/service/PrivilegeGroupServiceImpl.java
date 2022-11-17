@@ -33,11 +33,12 @@ public class PrivilegeGroupServiceImpl implements PrivilegeGroupService {
     @Override
     public String getDefaultPrivilegeGroupId() {
         final Optional<PrivilegeGroup> foundPrivilegeGroup = privilegeGroupRepository.findDefaultPrivilegeGroup();
-        if (!foundPrivilegeGroup.isPresent()) {
-            alertService.logAndThrowException(AlertCode.S004, IllegalArgumentException.class, LogLevel.ERROR);
+        if (foundPrivilegeGroup.isPresent()) {
+            return foundPrivilegeGroup.get().getId();
         }
 
-        return foundPrivilegeGroup.get().getId();
+        final String errorMessage = alertService.logAlertByCode(AlertCode.S004, LogLevel.ERROR);
+        throw new IllegalArgumentException(errorMessage);
     }
 
     @Override
@@ -48,11 +49,12 @@ public class PrivilegeGroupServiceImpl implements PrivilegeGroupService {
     @Override
     public PrivilegeGroupResource getPrivilegeGroupById(final String id) {
         final Optional<PrivilegeGroup> foundPrivilegeGroup = privilegeGroupRepository.findById(id);
-        if (!foundPrivilegeGroup.isPresent()) {
-            alertService.logAndThrowException(AlertCode.B301, IllegalArgumentException.class, LogLevel.WARN, id);
+        if (foundPrivilegeGroup.isPresent()) {
+            return privilegeGroupMapper.modelToResource(foundPrivilegeGroup.get());
         }
 
-        return privilegeGroupMapper.modelToResource(foundPrivilegeGroup.get());
+        final String errorMessage = alertService.logAlertByCode(AlertCode.B301, LogLevel.WARN, id);
+        throw new IllegalArgumentException(errorMessage);
     }
 
     @Override
@@ -77,13 +79,15 @@ public class PrivilegeGroupServiceImpl implements PrivilegeGroupService {
         final String groupName = privilegeGroupResource.getGroupName();
         final boolean existsGroupName = privilegeGroupRepository.existsByGroupName(groupName);
         if (existsGroupName) {
-            alertService.logAndThrowException(AlertCode.B302, IllegalArgumentException.class, LogLevel.WARN, groupName);
+            final String errorMessage = alertService.logAlertByCode(AlertCode.B302, LogLevel.WARN, groupName);
+            throw new IllegalArgumentException(errorMessage);
         }
 
         final boolean existsDefaultGroupPrivilege = privilegeGroupRepository.existsDefaultPrivilegeGroup();
         final boolean hasDtoDefaultPrivilegeGroupProperty = privilegeGroupResource.getIsDefaultGroup();
         if (existsDefaultGroupPrivilege && hasDtoDefaultPrivilegeGroupProperty) {
-            alertService.logAndThrowException(AlertCode.B303, IllegalArgumentException.class, LogLevel.WARN);
+            final String errorMessage = alertService.logAlertByCode(AlertCode.B303, LogLevel.WARN);
+            throw new IllegalArgumentException(errorMessage);
         }
 
         final PrivilegeGroup privilegeGroup = privilegeGroupMapper.resourceToModel(privilegeGroupResource);
@@ -94,26 +98,31 @@ public class PrivilegeGroupServiceImpl implements PrivilegeGroupService {
     public void updatePrivilegeGroupById(final String id, final PrivilegeGroupResource privilegeGroupResource) {
         final Optional<PrivilegeGroup> foundPrivilegeGroupById = privilegeGroupRepository.findById(id);
         if (!foundPrivilegeGroupById.isPresent()) {
-            alertService.logAndThrowException(AlertCode.B301, IllegalArgumentException.class, LogLevel.WARN, id);
+            final String errorMessage = alertService.logAlertByCode(AlertCode.B301, LogLevel.WARN, id);
+            throw new IllegalArgumentException(errorMessage);
         }
 
         final Optional<PrivilegeGroup> defaultGroupPrivilege = privilegeGroupRepository.findDefaultPrivilegeGroup();
-        final boolean hasDtoDefaultPrivilegeGroupProperty = privilegeGroupResource.getIsDefaultGroup();
-        if (defaultGroupPrivilege.isPresent() && hasDtoDefaultPrivilegeGroupProperty) {
+        defaultGroupPrivilege.ifPresent(privilegeGroup -> {
+            final boolean resourcePrivilegeGroupIsDefault = privilegeGroupResource.getIsDefaultGroup();
+            final boolean groupNamesAreNotEqual = !privilegeGroupResource.getGroupName().equals(privilegeGroup.getGroupName());
 
-            if (!privilegeGroupResource.getGroupName().equals(defaultGroupPrivilege.get().getGroupName())) {
-                alertService.logAndThrowException(AlertCode.B303, IllegalArgumentException.class, LogLevel.WARN);
+            if (groupNamesAreNotEqual && resourcePrivilegeGroupIsDefault) {
+                final String errorMessage = alertService.logAlertByCode(AlertCode.B303, LogLevel.WARN);
+                throw new IllegalArgumentException(errorMessage);
             }
-        }
+        });
 
         final String groupName = privilegeGroupResource.getGroupName();
         final Optional<PrivilegeGroup> foundPrivilegeGroupByName = privilegeGroupRepository.findByGroupName(groupName);
-        if (foundPrivilegeGroupByName.isPresent()) {
+        foundPrivilegeGroupByName.ifPresent(privilegeGroupByName -> {
+            final boolean idIsNotEqualToFoundOne = !id.equals(privilegeGroupByName.getId());
 
-            if (!id.equals(foundPrivilegeGroupByName.get().getId())) {
-                alertService.logAndThrowException(AlertCode.B302, IllegalArgumentException.class, LogLevel.WARN, groupName);
+            if (idIsNotEqualToFoundOne) {
+                final String errorMessage = alertService.logAlertByCode(AlertCode.B302, LogLevel.WARN, groupName);
+                throw new IllegalArgumentException(errorMessage);
             }
-        }
+        });
 
         final PrivilegeGroup privilegeGroup = foundPrivilegeGroupById.get();
         privilegeGroup.setGroupName(privilegeGroupResource.getGroupName());
