@@ -81,7 +81,8 @@ public class ProfileServiceImpl implements ProfileService {
     public void registerNewProfile(final RegisterProfileResource profileResource) {
         final boolean profileExists = profileRepository.existsByUsername(profileResource.getUsername());
         if (profileExists) {
-            alertService.logAndThrowException(AlertCode.B001, IllegalArgumentException.class, LogLevel.WARN);
+            final String errorMessage = alertService.logAlertByCode(AlertCode.B001, LogLevel.WARN);
+            throw new IllegalArgumentException(errorMessage);
         }
 
         validatePasswords(profileResource);
@@ -109,11 +110,12 @@ public class ProfileServiceImpl implements ProfileService {
 
     private Profile validateAndGetProfileByUsername(final String username) {
         final Optional<Profile> foundProfile = profileRepository.findByUsername(username);
-        if (!foundProfile.isPresent()) {
-            alertService.logAndThrowException(AlertCode.B002, IllegalArgumentException.class, LogLevel.WARN, username);
+        if (foundProfile.isPresent()) {
+            return foundProfile.get();
         }
 
-        return foundProfile.get();
+        final String errorMessage = alertService.logAlertByCode(AlertCode.B002, LogLevel.WARN, username);
+        throw new IllegalArgumentException(errorMessage);
     }
 
     private void validatePasswords(final RegisterProfileResource resource) {
@@ -121,7 +123,8 @@ public class ProfileServiceImpl implements ProfileService {
         final String confirmation = resource.getConfirmPassword();
 
         if (!general.equals(confirmation)) {
-            alertService.logAndThrowException(AlertCode.S003, IllegalArgumentException.class, LogLevel.WARN);
+            final String errorMessage = alertService.logAlertByCode(AlertCode.S003, LogLevel.WARN);
+            throw new IllegalArgumentException(errorMessage);
         }
     }
 }

@@ -65,7 +65,8 @@ public class PlaneServiceImpl implements PlaneService {
         );
 
         if (planeExists) {
-            alertService.logAndThrowException(AlertCode.B101, IllegalArgumentException.class, LogLevel.WARN);
+            final String errorMessage = alertService.logAlertByCode(AlertCode.B101, LogLevel.WARN);
+            throw new IllegalArgumentException(errorMessage);
         }
 
         final Plane mappedPlane = planeMapper.resourceToModel(planeResource);
@@ -83,10 +84,11 @@ public class PlaneServiceImpl implements PlaneService {
 
     private Plane validateAndGetPlaneById(final String id) {
         final Optional<Plane> foundPlane = planeRepository.findById(id);
-        if (!foundPlane.isPresent()) {
-            alertService.logAndThrowException(AlertCode.B102, IllegalArgumentException.class, LogLevel.WARN, id);
+        if (foundPlane.isPresent()) {
+            return foundPlane.get();
         }
 
-        return foundPlane.get();
+        final String errorMessage = alertService.logAlertByCode(AlertCode.B102, LogLevel.WARN, id);
+        throw new IllegalArgumentException(errorMessage);
     }
 }
