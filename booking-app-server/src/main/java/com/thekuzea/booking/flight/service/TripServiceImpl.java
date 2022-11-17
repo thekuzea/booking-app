@@ -81,17 +81,17 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public void saveNewTrip(final TripResource tripResource) {
-        final boolean tripExists = tripRepository.existsByParameters(
-                tripResource.getTripClassType(),
-                tripResource.getCountryCodeOfDeparture(),
-                tripResource.getCityOfDeparture(),
-                DateTimeUtil.convertStringToOffsetDateTime(tripResource.getDepartureDateTime()),
-                tripResource.getCountryCodeOfArrival(),
-                tripResource.getCityOfArrival(),
-                DateTimeUtil.convertStringToOffsetDateTime(tripResource.getDateTimeOfArrival()),
-                tripResource.getPlane().getId()
-        );
+        final Trip trip = new Trip();
+        trip.setTripClassType(tripResource.getTripClassType());
+        trip.setCountryCodeOfDeparture(tripResource.getCountryCodeOfDeparture());
+        trip.setCityOfDeparture(tripResource.getCityOfDeparture());
+        trip.setDepartureDateTime(DateTimeUtil.convertStringToOffsetDateTime(tripResource.getDepartureDateTime()));
+        trip.setCountryCodeOfArrival(tripResource.getCountryCodeOfArrival());
+        trip.setCityOfArrival(tripResource.getCityOfArrival());
+        trip.setDateTimeOfArrival(DateTimeUtil.convertStringToOffsetDateTime(tripResource.getDateTimeOfArrival()));
+        trip.setPlaneId(tripResource.getPlane().getId());
 
+        final boolean tripExists = tripRepository.existsByExample(trip);
         if (tripExists) {
             final String errorMessage = alertService.logAlertByCode(AlertCode.B201, LogLevel.WARN);
             throw new IllegalArgumentException(errorMessage);
